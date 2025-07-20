@@ -1,0 +1,14 @@
+{
+  "name": "scraping_aggregator",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "apify-client": "^2.12.6"
+  }
+}
