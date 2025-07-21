@@ -1,0 +1,19 @@
+{
+  "name": "api_server",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "deploy": "bun run scripts/deploy.ts"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "fastify": "^5.4.0",
+    "mongodb": "^6.17.0"
+  }
+}

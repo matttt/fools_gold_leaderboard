@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  bun-server:
+    build:
+      context: ./api_server
+      dockerfile: Dockerfile
+    container_name: api_server
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  bun-cron:
+    build:
+      context: ./scraper
+      dockerfile: Dockerfile
+    container_name: scraper
+    env_file:
+      - .env
+    depends_on:
+      - bun-server     # optional, just to ensure code build order
+    restart: unless-stopped
+
+# no volumes needed for Mongo Atlas

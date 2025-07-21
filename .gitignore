@@ -1,2 +1,5 @@
-scraping_aggregator/node_modules
-app/node_modules
+scraper/node_modules
+scraper/.env
+api_server/node_modules
+api_server/.env
+.env
