@@ -48,6 +48,44 @@ fastify.get("/viewcounts/latest", async (req, reply) => {
   };
 });
 
+  fastify.get('/viewcounts/flattened', async (req, reply) => {
+    // load all historical docs in ascending time order
+    const docs = await viewCountsColl
+      .find({}, { sort: { createdAt: 1 } })
+      .toArray();
+
+    if (docs.length === 0) {
+      return reply.code(404).send({ error: 'No data found' });
+    }
+
+    // build the times array
+    const times = docs.map((doc) => doc.createdAt.toISOString());
+
+    // initialize a structure for each video key
+    const videos: Record<string, {
+      youtube: number[];
+      tiktok: number[];
+      instagram: number[];
+    }> = {};
+
+    // iterate through each snapshot
+    for (const doc of docs) {
+      for (const [rawKey, counts] of Object.entries(doc.viewCounts)) {
+        // convert underscore naming to dashed naming
+        const key = rawKey.replace(/_/g, '-');
+        if (!videos[key]) {
+          videos[key] = { youtube: [], tiktok: [], instagram: [] };
+        }
+        videos[key].youtube.push(counts.youtube);
+        videos[key].tiktok.push(counts.tiktok);
+        // original data uses "reels" for Instagram counts
+        videos[key].instagram.push(counts.reels ?? counts.instagram ?? 0);
+      }
+    }
+
+    return { times, videos };
+  });
+
 // 3. Graceful shutdown
 fastify.addHook("onClose", async () => {
   // MongoClient.close() automatically called by Bun on process exit,
