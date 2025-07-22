@@ -296,8 +296,7 @@ async function run() {
     
     // optionally: if you want documents to auto-expire after e.g. 7 days
     await viewCountsCollection.createIndex(
-      { createdAt: 1 },
-      { expireAfterSeconds: 7 * 24 * 60 * 60 }
+      { createdAt: 1 }
     );
 
     // Insert the scrape results into the collection
