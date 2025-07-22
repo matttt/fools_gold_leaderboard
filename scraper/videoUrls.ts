@@ -54,7 +54,7 @@ export const videoUrls = {
     [VideoName.SephiesSexyCarWash]: {
         [VideoPlatform.Youtube]: 'https://www.youtube.com/shorts/HD5pyGbO_Is', 
         [VideoPlatform.Tiktok]: 'https://www.tiktok.com/@gamechangershow/video/7527082014449716494',
-        [VideoPlatform.Reels]: 'https://www.instagram.com/p/DMG0OcPpSQO',
+        [VideoPlatform.Reels]: 'https://www.instagram.com/p/DMG0OcPpSQO/',
     },
     [VideoName.GrantsCrack]: {
         [VideoPlatform.Youtube]: 'https://www.youtube.com/shorts/1lnl0jYln8s', 

@@ -1,13 +1,11 @@
-# Dockerfile
-FROM oven/bun:latest
+FROM ghcr.io/puppeteer/puppeteer:latest
 
 WORKDIR /app
-# copy everything, install deps
-COPY . .
-RUN bun install
 
-# expose your port
+# 6) Copy code & install JS deps
+COPY --chown=pptruser . .
+RUN npm ci
+
+# 7) Expose port & launch
 EXPOSE 3000
-
-# launch your app
-ENTRYPOINT ["bun", "run", "index.ts"]
+ENTRYPOINT ["npx", "tsx", "index.ts"]
