@@ -1,12 +1,17 @@
 import "dotenv/config";
 import Fastify from "fastify";
 import { MongoClient, ServerApiVersion } from "mongodb";
+import cors from "@fastify/cors";
 
 const fastify = Fastify({ logger: true });
 const MONGO_URI = process.env.MONGODB_CONNECTION_STRING || "";
 const PORT = Number(process.env.PORT || 3000);
 
 let viewCountsColl: any;
+
+fastify.register(cors, {
+  origin: "*",
+});
 
 // 1. Connect to Mongo on startup
 fastify.addHook("onReady", async () => {
@@ -70,9 +75,7 @@ fastify.get("/viewcounts/latest", async (req, reply) => {
 
     // iterate through each snapshot
     for (const doc of docs) {
-      for (const [rawKey, counts] of Object.entries(doc.viewCounts)) {
-        // convert underscore naming to dashed naming
-        const key = rawKey.replace(/_/g, '-');
+      for (const [key, counts] of Object.entries(doc.viewCounts)) {
         if (!videos[key]) {
           videos[key] = { youtube: [], tiktok: [], instagram: [] };
         }
